@@ -1,0 +1,21 @@
+{% extends 'main.html.twig' %}
+
+{% block body %}
+    <div class="userlist">
+        <table>
+
+            <tr>
+                <th>Naam</th>
+                <th>E-mailadres</th>
+                <th>Woonplaats</th>
+            </tr>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.city }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
