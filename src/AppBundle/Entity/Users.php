@@ -2,15 +2,14 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Users
  * @package AppBundle\Entity
  *
- * @ORM\Entity(repositoryClass="AppBundle\Repositories\UsersRepository")
- * @ORM\Table(name="Users")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UsersRepository")
+ * @ORM\Table(name="users")
  */
 class Users
 {
@@ -71,13 +70,31 @@ class Users
      *
      * @var \AppBundle\Entity\Skills
      */
-    private $skills;
 
-    public function __construct()
-    {
-        $this->skills = new ArrayCollection();
-    }
 
+    /**
+     * @ORM\Column(type="string", name="username", length=20)
+     *
+     * @var string
+     */
+    public $username;
+
+
+    /**
+     * @ORM\Column(type="string", name="password", length=255)
+     *
+     * @var string
+     */
+    protected $password;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Profiles", inversedBy="Users")
+     * @ORM\JoinColumn(name="profile_id", referencedColumnName="id")
+     */
+    public $profile_id;
+
+
+    
     /**
      * @return int
      */
