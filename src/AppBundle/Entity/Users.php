@@ -211,6 +211,16 @@ class Users
         return $this->city;
     }
 
+    
+    /**
+     * @return string
+     */
+    public function getUserName()
+    {
+        return $this->username;
+    }
+
+
     /**
      * @param string $city
      *

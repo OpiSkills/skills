@@ -29,10 +29,10 @@ class LoginController extends Controller
     public function login(Request $request)
     {
     	$send = $request->request->all();
-    	$this->getDoctrine()->getRepository('AppBundle:Users')
+    	$get = $this->getDoctrine()->getRepository('AppBundle:Users')
        		->checkLogin($send['username'], $send['password']);
     		
-		return new JsonResponse($send['username']);
+		return new JsonResponse($get);
     }
 
 }
