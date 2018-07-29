@@ -121,3 +121,7 @@
 	border-top-right-radius: 15px;
 	border-bottom-right-radius: 15px;
 }
+
+.login-input-error {
+	border: 1px solid darkred !important;
+}

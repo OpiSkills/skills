@@ -1,22 +1,27 @@
 {% extends 'main.html.twig' %}
 
 {% block body %}
-    <div class="userlist">
-        <table>
+    {% if userRights['userRead'] == true %}
+        <div class="userlist">
+            <table>
 
-            <tr>
-                <th>Naam</th>
-                <th>E-mailadres</th>
-                <th>Woonplaats</th>
-            </tr>
-            {% for user in users %}
                 <tr>
-                    <td>{{ user.firstName }} {{ user.last_name }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.city }}</td>
-                    
+                    <th>Naam</th>
+                    <th>E-mailadres</th>
+                    <th>Woonplaats</th>
+                    <th>Profiel</th>
                 </tr>
-            {% endfor %}
-        </table>
-    </div>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.firstName }} {{ user.lastName }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.city }}</td>
+                        <td>{{ user.profileName }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        Je hebt geen leesrechten voor 'Users'
+    {% endif %}
 {% endblock %}

@@ -16,6 +16,7 @@
         <div class="portal">
             <div class="sidebar">
                 <div class="sidebar-title">Opinity Skill List</div>
+                <div class="sidebar-filters"></div>
             </div>
 
             <div class="portal-content">
@@ -26,7 +27,64 @@
                             <button type="submit" id="search-submit" value="Zoeken"><i class="fas fa-search"></i></button>
                         </form>
                     </div>
+                    <div class="topbar-user-fullname">
+                        {{ userFullName }}<br/>
+                        <a href="/app/logout" id="logout">Uitloggen</a>
+                    </div>
                 </div>
+
+                <div class="menubar">
+                    <div class="menubar-option {% if activePageClass == 'home' %}menubar-option-hover{% endif %}" option="home">
+                        <img src="{{ asset('images/home.svg') }}"/>
+                        <div class="menubar-option-text">Home</div>
+                    </div>
+
+                    {% if userRights['userRead'] == true %}
+                        <div class="menubar-option {% if activePageClass == 'users' %}menubar-option-hover{% endif %}" option="users">
+                            <img src="{{ asset('images/man-user.svg') }}"/>
+                            <div class="menubar-option-text">Gebruikers</div>
+                        </div>
+                    {% endif %}
+
+                    <div class="menubar-option {% if activePageClass == 'skills' %}menubar-option-hover{% endif %}" option="skills">
+                        <img src="{{ asset('images/skills.svg') }}"/>
+                        <div class="menubar-option-text">Skills</div>
+                    </div>
+
+                    {% if userRights['groupRead'] == true %}
+                        <div class="menubar-option {% if activePageClass == 'groups' %}menubar-option-hover{% endif %}" option="groups">
+                            <img src="{{ asset('images/users-group.svg') }}"/>
+                            <div class="menubar-option-text">Gebruikersgroepen</div>
+                        </div>
+                    {% endif %}
+
+                    {% if userRights['profileRead'] == true %}
+                        <div class="menubar-option {% if activePageClass == 'profiles' %}menubar-option-hover{% endif %}" option="profiles">
+                            <img src="{{ asset('images/profile.svg') }}"/>
+                            <div class="menubar-option-text">Profielen</div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if activePageClass != 'home' %}
+                    <div class="crudbar" active-page="{{ activePageClass }}">
+                        {% if crudActions['read'] == true %}
+                            <input type="button" value="Lijst" id="crud-read">
+                        {% endif %}
+
+                        {% if crudActions['create'] == true %}
+                            <input type="button" value="Toevoegen" id="crud-create">
+                        {% endif %}
+
+                        {% if crudActions['create'] == true %}
+                            <input type="button" value="Aanpassen" id="crud-update">
+                        {% endif %}
+
+                        {% if crudActions['delete'] == true %}
+                            <input type="button" value="Verwijderen" id="crud-delete">
+                        {% endif %}
+                    </div>
+                {% endif %}
 
                 <div class="content">
                     {% block body %} {% endblock %}
@@ -40,7 +98,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
         <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" defer></script>
-        <script src="{{ asset('js/jquery.cycle.all.js') }}" defer></script>
         <script src="{{ asset('js/opinity.js') }}" defer></script>
     </body>
 </html>

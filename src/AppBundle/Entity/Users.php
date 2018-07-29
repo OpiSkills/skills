@@ -13,95 +13,208 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Users
 {
-    /**
+	/**
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      *
      * @var integer
      */
-    protected $Id;
+    public $id;
+
 
     /**
-     * @ORM\Column(type="string", name="first_name")
+     * @ORM\Column(name="created_on", type="datetime", nullable=true, options={"default": 0})
+     */
+    public $createdOn;
+
+
+    /**
+     * @ORM\Column(name="created_by", type="integer", nullable=false)
+     */
+    public $createdBy;
+
+
+    /**
+     * @ORM\Column(name="updated_on", type="datetime", nullable=true)
+     */
+    public $updatedOn;
+
+
+    /**
+     * @ORM\Column(name="updated_by", type="integer", nullable=true)
+     */
+    public $updateBy;
+
+
+    /**
+     * @ORM\Column(name="active", type="boolean", nullable=true, options={"default": true})
+     */
+    public $isActive;
+
+
+    /**
+     * @ORM\Column(name="removed", type="boolean", nullable=true, options={"default": false})
+     */
+    public $isRemoved;
+
+
+    /**
+     * @ORM\Column(name="first_name", type="string", length=40, nullable=false)
      *
-     * @var string
+     * @var string 
      */
     public $firstName;
 
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(name="insertion", type="string", length=15, nullable=true)
      *
-     * @var string
      */
     public $insertion;
 
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string
-     */
-    public $last_name;
 
     /**
-     * @ORM\Column(type="boolean");
+     * @ORM\Column(name="last_name", type="string", length=80, nullable=false)
      *
-     * @var boolean
      */
-    public $active;
+    public $lastName;
+
 
     /**
-     * @ORM\Column(type="string");
+     * @ORM\Column(name="street", type="string", length=80, nullable=false)
      *
-     * @var string
      */
-    public $email;
+    public $street;
+
 
     /**
-     * @ORM\Column(type="string", length=50);
+     * @ORM\Column(name="housenumber", type="string", length=10, nullable=false)
      *
-     * @var string
+     */
+    public $houseNumber;
+
+
+    /**
+     * @ORM\Column(name="postalcode", type="string", length=10, nullable=false)
+     *
+     */
+    public $postalCode;
+
+
+    /**
+     * @ORM\Column(name="city", type="string", length=40, nullable=false)
+     *
      */
     public $city;
 
+
     /**
-     * @ORM/OneToMany(targetEntity="Skills")
+     * @ORM\Column(name="email", type="string", length=80, nullable=false)
      *
-     * @var \AppBundle\Entity\Skills
      */
+    public $email;
 
 
     /**
-     * @ORM\Column(type="string", name="username", length=20)
+     * @ORM\Column(name="username", type="string", length=20, nullable=false)
      *
-     * @var string
      */
-    public $username;
+    public $userName;
 
 
     /**
-     * @ORM\Column(type="string", name="password", length=255)
+     * @ORM\Column(name="password", type="string", length=255, nullable=false)
      *
-     * @var string
      */
-    protected $password;
+    public $passWord;
+
 
     /**
-     * @ORM\ManyToOne(targetEntity="Profiles", inversedBy="Users")
+     * @ORM\Column(name="date_of_birth", type="date", nullable=true)
+     *
+     */
+    public $birthDay;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Groups", inversedBy="users")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     */
+    public $groupId;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Profiles", inversedBy="users")
      * @ORM\JoinColumn(name="profile_id", referencedColumnName="id")
      */
-    public $profile_id;
+    public $profileId;
 
 
-    
+    /* GETTERS ------------------------------------------------------------------------------------------------------- */
+
+
     /**
-     * @return int
+     * @return integer
      */
     public function getId()
     {
         return $this->Id;
     }
+
+    /**
+     * @return datetime
+     */
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
+    }
+
+
+    /**
+     * @return integer
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+
+    /**
+     * @return datetime
+     */
+    public function getUpdatedOn()
+    {
+        return $this->updatedOn;
+    }
+
+
+    /**
+     * @return integer
+     */
+    public function getUpdatedBy()
+    {
+        return $this->updateBy;
+    }
+
+
+    /**
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+
+    /**
+     * @return boolean
+     */
+    public function getRemoved()
+    {
+        return $this->removed;
+    }
+
 
     /**
      * @return string
@@ -111,17 +224,6 @@ class Users
         return $this->firstName;
     }
 
-    /**
-     * @param string $first_name
-     *
-     * @return Users
-     */
-    public function setFirstName($first_name)
-    {
-        $this->firstName = $first_name;
-
-        return $this;
-    }
 
     /**
      * @return string
@@ -131,77 +233,42 @@ class Users
         return $this->insertion;
     }
 
-    /**
-     * @param string $insertion
-     *
-     * @return Users
-     */
-    public function setInsertion($insertion)
-    {
-        $this->insertion = $insertion;
-
-        return $this;
-    }
 
     /**
      * @return string
      */
     public function getLastName()
     {
-        return $this->last_name;
+        return $this->lastName;
     }
 
-    /**
-     * @param string $last_name
-     *
-     * @return Users
-     */
-    public function setLastName($last_name)
-    {
-        $this->last_name = $last_name;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param bool $active
-     *
-     * @return Users
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-
-        return $this;
-    }
 
     /**
      * @return string
      */
-    public function getEmail()
+    public function getStreet()
     {
-        return $this->email;
+        return $this->street;
     }
+
 
     /**
-     * @param string $email
-     *
-     * @return Users
+     * @return string
      */
-    public function setEmail($email)
+    public function getHouseNumber()
     {
-        $this->email = $email;
-
-        return $this;
+        return $this->houseNumber;
     }
+
+
+    /**
+     * @return string
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
 
     /**
      * @return string
@@ -211,35 +278,178 @@ class Users
         return $this->city;
     }
 
-    
+
     /**
      * @return string
      */
-    public function getUserName()
+    public function getEmail()
     {
-        return $this->username;
+        return $this->email;
     }
 
 
     /**
-     * @param string $city
-     *
-     * @return $this
+     * @return string
      */
-    public function setCity($city)
+    public function getUsername()
+    {
+        return $this->userName;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getPassWord()
+    {
+        return $this->passWord;
+    }
+
+
+    /* SETTERS ------------------------------------------------------------------------------------------------------- */
+
+
+    /**
+     * @return integer
+     */
+    public function setCreatedBy($userId = integer)
+    {
+        $this->createdBy = $userId;
+    }
+
+
+    /**
+     * 
+     */
+    public function setUpdatedOn($updateOn = string)
+    {
+        $this->updatedOn = $updateOn;
+    }
+
+
+    /**
+     * 
+     */
+    public function setUpdatedBy($userId = integer)
+    {
+        $this->updateBy = $userId;
+    }
+    
+    /**
+     * @param string $active = boolean
+     *
+     * @return Users
+     */
+    public function setIsActive($active = boolean)
+    {
+        $this->isActive = $active;
+    }
+
+
+    /**
+     * @param string $removed = boolean
+     *
+     * @return Users
+     */
+    public function setIsRemoved($removed = boolean)
+    {
+        $this->isRemoved = $removed;
+    }
+
+
+    /**
+     * @param string $firstName = string
+     *
+     * @return Users
+     */
+    public function setFirstName($firstName = string)
+    {
+        $this->firstName = $firstName;
+    }
+
+
+    /**
+     * @return string
+     *
+     * @return Users
+     */
+    public function setInsertion($insertion = string)
+    {
+        return $this->insertion;
+    }
+
+
+    /**
+     * @param string $lastName = string
+     *
+     * @return Users
+     */
+    public function setLastName($lastName = string)
+    {
+        $this->lastName = $lastName;
+    }
+
+
+    /**
+     * 
+     */
+    public function setStreet($street = string)
+    {
+        $this->street = $street;
+    }
+
+
+    /**
+     * 
+     */
+    public function setHouseNumber($houseNumber = string)
+    {
+        $this->houseNumber = $houseNumber;
+    }
+
+
+    /**
+     * 
+     */
+    public function setPostalCode($postalCode = string)
+    {
+        $this->postalCode = $postalCode;
+    }
+
+
+    /**
+     * 
+     */
+    public function setCity($city = string)
     {
         $this->city = $city;
-
-        return $this;
     }
 
-    public function setSkills($skill)
+
+    /**
+     * 
+     */
+    public function setEmail($email = string)
     {
-        $this->skills = $skill;
+        $this->email = $email;
     }
 
-    public function getSkills()
+
+    /**
+     * 
+     */
+    public function setUsername($userName = string)
     {
-        return $this->skills;
+        $this->userName = $userName;
     }
+
+
+    /**
+     * 
+     */
+    public function setPassWord($passWord = string)
+    {
+        $this->passWord = $passWord;
+    }
+
 }
